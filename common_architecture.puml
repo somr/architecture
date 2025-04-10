@@ -1,0 +1,97 @@
+/' ==============================================
+
+Common section containing alias and styles
+
+'/ ==============================================
+@startuml(id=common) periscope_common_architecture
+'KUBERNETES
+!$POD="img:icons/kubernetes/resources/labeled/pod-128.png"
+!$DEPLOY="img:icons/kubernetes/resources/labeled/deploy-128.png"
+!$RS="img:icons/kubernetes/resources/labeled/rs-128.png"
+!$HPA="img:icons/kubernetes/resources/labeled/hpa-128.png"
+!$CONFIGMAP="img:icons/kubernetes/resources/labeled/cm-128.png"
+!$JOB="img:icons/kubernetes/resources/labeled/job-128.png"
+!$SCH="img:icons/kubernetes/control_plane_components/labeled/sched-128.png"
+!$API="img:icons/kubernetes/control_plane_components/labeled/api-128.png"
+
+
+'COMMON
+!$FILE="img:icons/file_manyrecords.png"
+!$RECORD="img:icons/individualRecord.png"
+!$CLOUDERA="img:icons/cloudera_logo_icon.png"
+!$RESTAPI="img:icons/api-cogwheel.png"
+
+left to right direction
+
+skinparam DefaultTextAlignment center
+skinparam DefaultAlignment center
+skinparam ArrowThickness 5
+
+skinparam title{
+	FontSize 40
+}
+
+skinparam rectangle{
+	backgroundColor #FFFFFF
+	roundCorner 25
+}
+
+skinparam node<<Infrastructure>>{
+	backgroundColor LightBlue
+	fontColor DarkBlue
+	FontSize 40
+}
+
+skinparam rectangle<<Observed>>{
+	backgroundColor DarkOrange
+	fontColor white
+	FontSize 20
+}
+
+skinparam rectangle<<Instrumented>>{
+	backgroundColor DarkOrange
+	fontColor white
+	FontSize 20
+}
+
+skinparam rectangle<<PeriscopeService>>{
+	'backgroundColor LimeGreen
+	backgroundColor #A9D18E
+    fontColor white
+	FontSize 20
+}
+
+skinparam rectangle<<ProbePoint>>{
+	'backgroundColor ForestGreen
+	backgroundColor #A9D18E
+    fontColor white
+	FontSize 20
+}
+
+'GCP
+!$GCPCLOUD="img:icons/gcp/gcp.png"
+
+!$AIRFLOW="img:icons/gcp/airflow.png"
+!$BQ="img:icons/gcp/bigquery.png"
+!$BQPROC="img:icons/gcp/bigquery-proc.png"
+!$CLOG="img:icons/gcp/cloudlogging.png"
+!$SECRETS="img:icons/gcp/secretsmanager.png"
+!$DT="img:icons/gcp/datatransfer.png"
+!$BUCKET="img:icons/gcp/cloudstorage.png"
+!$DPROC="img:icons/gcp/dataproc.png"
+!$PUBSUB="img:icons/gcp/pubsub.png"
+!$GKE="img:icons/gcp/gke.png"
+!$CFUNCTION="img:icons/gcp/cloudfunction.png"
+!$CCOMPOSER="img:icons/gcp/ccomposerv2.png"
+!$CLOUDSQL="img:icons/gcp/cloudsql.png"
+!$SCHEDULER="img:icons/gcp/scheduler.png"
+!$MONITORING="img:icons/gcp/monitoring.png"
+!$LOOKER="img:icons/gcp/looker.png"
+
+'AWS
+!$AWSCLOUD="img:icons/aws/AWS-Cloud-logo_32_Dark.png"
+!$LAMBDA="img:icons/aws/Arch_Compute/64/Arch_AWS-Lambda_64.png"
+!$S3BUCKET="img:icons/aws/Arch_Storage/64/Arch_Amazon-Simple-Storage-Service_64.png"
+!$EMR="img:icons/aws/Arch_Analytics/64/Arch_Amazon-EMR_64.png"
+!$EVENTBRIDGE="img:icons/aws/Arch_App-Integration/64/Arch_Amazon-EventBridge_64.png"
+@enduml
