@@ -5,7 +5,8 @@ Common section containing alias and styles
 '/ ==============================================
 @startuml(id=common) periscope_common_architecture
 
-!$BASEURL="https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.0"
+!$BASEURL="https://github.com/somr/architecture/blob/v1.2"
+
 
 'KUBERNETES
 !$POD="img:$BASEURL/icons/kubernetes/resources/labeled/pod-128.png"
