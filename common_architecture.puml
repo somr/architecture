@@ -100,28 +100,28 @@ skinparam rectangle<<ProbePoint>>{
 !$EVENTBRIDGE="img:"+$BASEURL+"/icons/aws/Arch_App-Integration/64/Arch_Amazon-EventBridge_64.png"
 
 
-!$EMRJOB="img:"+$BASEURL+"/aws/Arch_Analytics/64/Res_Amazon-EMR_Cluster_48.png"
+!$EMRJOB="img:"+$BASEURL+"/icons/aws/Arch_Analytics/64/Res_Amazon-EMR_Cluster_48.png"
 
-!$ATHENA="img:"+$BASEURL+"/aws/Arch_Analytics/64/Arch_Amazon-Athena_64.png"
+!$ATHENA="img:"+$BASEURL+"/icons/aws/Arch_Analytics/64/Arch_Amazon-Athena_64.png"
 
-!$SNS="img:"+$BASEURL+"/aws/Arch_App-Integration/64/Arch_Amazon-Simple-Notification-Service_64.png"
-!$SQS="img:"+$BASEURL+"/aws/Arch_App-Integration/64/Arch_Amazon-Simple-Queue-Service_64.png"
-!$STEPFN="img:"+$BASEURL+"/aws/Arch_App-Integration/64/Arch_AWS-Step-Functions_64.png"
+!$SNS="img:"+$BASEURL+"/icons/aws/Arch_App-Integration/64/Arch_Amazon-Simple-Notification-Service_64.png"
+!$SQS="img:"+$BASEURL+"/icons/aws/Arch_App-Integration/64/Arch_Amazon-Simple-Queue-Service_64.png"
+!$STEPFN="img:"+$BASEURL+"/icons/aws/Arch_App-Integration/64/Arch_AWS-Step-Functions_64.png"
 
-!$TASK="img:"+$BASEURL+"/aws/Arch_Containers/64/Res_Amazon-Elastic-Container-Service_Task_48.svg"
-!$ECS="img:"+$BASEURL+"/aws/Arch_Containers/64/Arch_Amazon-Elastic-Container-Service_64.png"
+!$TASK="img:"+$BASEURL+"/icons/aws/Arch_Containers/64/Res_Amazon-Elastic-Container-Service_Task_48.svg"
+!$ECS="img:"+$BASEURL+"/icons/aws/Arch_Containers/64/Arch_Amazon-Elastic-Container-Service_64.png"
 
-!$LOGGROUP="img:"+$BASEURL+"/aws/Arch_Management-Governance/64/Res_Amazon-CloudWatch_Logs_48.png"
-!$CRON="img:"+$BASEURL+"/aws/Arch_Management-Governance/64/Res_Amazon-CloudWatch_Event-Time-Based_48.png"
-!$ALARM="img:"+$BASEURL+"/aws/Arch_Management-Governance/64/Res_Amazon-CloudWatch_Alarm_48.png"
+!$LOGGROUP="img:"+$BASEURL+"/icons/aws/Arch_Management-Governance/64/Res_Amazon-CloudWatch_Logs_48.png"
+!$CRON="img:"+$BASEURL+"/icons/aws/Arch_Management-Governance/64/Res_Amazon-CloudWatch_Event-Time-Based_48.png"
+!$ALARM="img:"+$BASEURL+"/icons/aws/Arch_Management-Governance/64/Res_Amazon-CloudWatch_Alarm_48.png"
 
-!$LOADBALANCER="img:"+$BASEURL+"/aws/Arch_Networking-Content-Delivery/64/Arch_Elastic-Load-Balancing_64.png"
-!$LOADBALANCER_SERVICE="img:"+$BASEURL+"/aws/Arch_Networking-Content-Delivery/64/Res_Elastic-Load-Balancing_Network-Load-Balancer_48.png"
+!$LOADBALANCER="img:"+$BASEURL+"/icons/aws/Arch_Networking-Content-Delivery/64/Arch_Elastic-Load-Balancing_64.png"
+!$LOADBALANCER_SERVICE="img:"+$BASEURL+"/icons/aws/Arch_Networking-Content-Delivery/64/Res_Elastic-Load-Balancing_Network-Load-Balancer_48.png"
 
-!$RDS="img:"+$BASEURL+"/aws/Arch_Database/64/Arch_Amazon-RDS_64.png"
-!$RDS_PG="img:"+$BASEURL+"/aws/Arch_Database/64/Res_Amazon-Aurora-PostgreSQL-Instance_48.png"
-!$RDS_MY="img:"+$BASEURL+"/aws/Arch_Database/64/Res_Amazon-Aurora-PostgreSQL-Instance_48.png"
+!$RDS="img:"+$BASEURL+"/icons/aws/Arch_Database/64/Arch_Amazon-RDS_64.png"
+!$RDS_PG="img:"+$BASEURL+"/icons/aws/Arch_Database/64/Res_Amazon-Aurora-PostgreSQL-Instance_48.png"
+!$RDS_MY="img:"+$BASEURL+"/icons/aws/Arch_Database/64/Res_Amazon-Aurora-PostgreSQL-Instance_48.png"
 
-!$SSM="img:"+$BASEURL+"/aws/Arch_Security-Identity-Compliance/64/Arch_AWS-Secrets-Manager_64.png"
+!$SSM="img:"+$BASEURL+"/icons/aws/Arch_Security-Identity-Compliance/64/Arch_AWS-Secrets-Manager_64.png"
 
 @enduml
