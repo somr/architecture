@@ -1,0 +1,13 @@
+@startuml(id=splunk_infra)
+
+!include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml
+
+rectangle "<$SPLUNK>" as SPLUNK_INFRA {
+    rectangle "<$SPLUNK_DATASET>\nDataset" as SPLUNK_DATASET
+    rectangle "<$SPLUNK_ALERT>\nAlerts" as SPLUNK_ALERT
+    SPLUNK_DATASET ..> SPLUNK_ALERT
+}
+
+rectangle "<$SPLUNK_EMAIL>\nAlerts" as SPLUNK_EMAIL
+SPLUNK_ALERT ..> SPLUNK_EMAIL
+@enduml

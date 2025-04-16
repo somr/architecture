@@ -1,0 +1,213 @@
+@startuml(id=notification)
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml
+    rectangle "<$SNS>\nControl Tier Notification" as control_topic
+    rectangle "<$SSM>\nSecrets & Config" as event_config
+
+    rectangle "<$SPLUNK>" as splunk
+@enduml
+
+@startuml(id=stepfn_wrapper)
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!notification
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!alarms_notification
+    rectangle "<$LAMBDA>\nStep Fn Wrapper" as ut_control_step_fn_warpper_lambda
+    rectangle "<$LOGGROUP>\nStep Fn Wrapper" as step_fn_wrapper_log
+    rectangle "<$ALARM>\nAlarm" as step_fn_wrapper_alarm
+    ut_control_step_fn_warpper_lambda .> step_fn_wrapper_log
+    control_topic .d.> ut_control_step_fn_warpper_lambda
+    ut_control_step_fn_warpper_lambda .u.> control_topic
+    step_fn_wrapper_log .d. step_fn_wrapper_alarm
+    step_fn_wrapper_alarm .> alerts_to_RTB #red
+
+    'Config
+    event_config -> ut_control_step_fn_warpper_lambda #coral
+
+@enduml
+
+
+@startuml(id=ftp_push)
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml!common
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!alarms_notification
+    rectangle "<$LAMBDA>\nPush Lambda" as ut_interface_push_lambda
+    rectangle "<$LOGGROUP>\nPush Lambda" as push_lambda_log
+    rectangle "<$ALARM>\nAlarm" as push_lambda_alarm
+    ut_interface_push_lambda .> push_lambda_log
+    control_topic ..> ut_interface_push_lambda
+    push_lambda_log .d. push_lambda_alarm
+    push_lambda_alarm .> alerts_to_RTB #red
+
+    'Config
+    event_config -> ut_interface_push_lambda #coral
+@enduml
+
+@startuml(id=fan_out)
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml!common
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!notification
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!alarms_notification
+    rectangle "<$LAMBDA>\nFan Out" as ut_control_fanout_lambda
+    rectangle "<$LOGGROUP>\nFan Out" as fan_out_log
+    rectangle "<$ALARM>\nAlarm" as ut_control_fanout_lambdar_alarm
+    ut_control_fanout_lambda .> fan_out_log
+
+    control_topic ..> ut_control_fanout_lambda
+    ut_control_fanout_lambda ...> control_topic : "Publishing more than\none message\nas per the input\n"
+
+
+    fan_out_log .d. ut_control_fanout_lambdar_alarm
+    ut_control_fanout_lambdar_alarm .> alerts_to_RTB #red
+    'Config
+    event_config -> ut_control_fanout_lambda #coral
+@enduml
+
+@startuml(id=alarms_notification)
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml!common
+    rectangle "<$SNS>\nAlerts to RTB" as alerts_to_RTB
+    rectangle "<$SNS>\nAlerts to ECC" as alerts_to_ECC
+@enduml
+
+@startuml(id=storedproc_wrapper)
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml!common
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!notification
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!alarms_notification
+    rectangle "<$LAMBDA>\nStored Proc Wrapper" as ut_control_stored_proc_wrapper_lambda
+    rectangle "<$LOGGROUP>\nStored Proc Wrapper" as stored_proc_wrapper_log
+    rectangle "<$ALARM>\nAlarm" as stored_proc_wrapper_alarm
+    ut_control_stored_proc_wrapper_lambda .> stored_proc_wrapper_log
+    control_topic .d.> ut_control_stored_proc_wrapper_lambda
+    ut_control_stored_proc_wrapper_lambda .u.> control_topic
+    stored_proc_wrapper_log .d. stored_proc_wrapper_alarm
+    stored_proc_wrapper_alarm .> alerts_to_RTB #red
+
+    'Config
+    event_config -> ut_control_stored_proc_wrapper_lambda #coral
+@enduml
+
+@startuml(id=registry)
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml!common
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!notification
+    !include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/unified_trade_platform.puml!alarms_notification
+
+    rectangle "<$ECS>\nECS Control" as control_ecs {
+        rectangle "<$TASK>\nRegistry maintenance" as registry_maintenance_task
+        rectangle "<$TASK>\nWatchdog" as watchdog_task
+    }
+
+    rectangle "<$RDS>\nRegistry Cluster" as registry_cluster {
+        rectangle "<$RDS_MY>\nRegistry" as registry_instance
+    }
+
+    rectangle "<$LOGGROUP>\nWatchdog" as watchdog_log
+    rectangle "<$LOGGROUP>\nWatchdog Graph Error" as watchdog_graph_error_log
+    rectangle "<$LOGGROUP>\nWatchdog Error Handler" as watchdog_error_log
+
+    'Filling the registry maintenance
+    control_topic --> registry_maintenance_task
+    registry_maintenance_task --> registry_instance
+
+    'monitoring the registry
+    control_topic "Reading\nsubscriptions\nand configuration"..> watchdog_task #lightblue
+    event_config "Reading\nevents\nproperties"--> watchdog_task #coral
+
+    watchdog_task <--> registry_instance
+    watchdog_task ..> alerts_to_RTB #red
+
+
+@enduml
+
+
+@startuml(id=control)
+!include https://raw.githubusercontent.com/somr/architecture/refs/tags/v1.5/common_architecture.puml!common
+
+rectangle "<$LAMBDA>\nJoin" as ut_control_join_lambda
+rectangle "<$LAMBDA>\nJoin Monitor" as ut_control_join_monitor_lambda
+rectangle "<$LAMBDA>\nDelay" as ut_control_delay_lambda
+rectangle "<$LAMBDA>\nFile Poller" as ut_control_file_poller_lambda
+rectangle "<$LAMBDA>\nGlue Wrapper" as ut_control_glue_wrapper_lambda
+rectangle "<$LAMBDA>\nStored Proc Wrapper" as ut_control_stored_proc_warpper_lambda
+rectangle "<$LAMBDA>\nFile Splitter" as ut_control_file_splitter_lambda
+rectangle "<$LAMBDA>\nEvent Router" as ut_control_event_router_lambda
+rectangle "<$LAMBDA>\nData Convert" as data_convert_lambda
+rectangle "<$LAMBDA>\nData Transform" as data_transform_lambda
+rectangle "<$LAMBDA>\nDatabase Load" as data_ingestion_lambda
+rectangle "<$LAMBDA>\nDatabase Query" as data_query_lambda
+rectangle "<$LAMBDA>\nControl" as control_lambda
+
+    rectangle " " as error_handler_service {
+        rectangle "<$SQS>\nError" as control_error
+        rectangle "<$LAMBDA>\nError Handler" as error_handler_lambda
+        rectangle "<$SQS>\nError Handler DLQ" as control_error_dlq
+        rectangle "<$EFS>Error Handler EFS" as error_efs
+
+        error_handler_lambda ..> alerts_to_RTB
+        error_efs -r-> error_handler_lambda
+        error_handler_lambda -l-> control_error_dlq
+        control_error ..> error_handler_lambda : Triggers
+    }
+    rectangle "<$SQS>\nRegistry Maintenance" as registry_maintenance
+
+
+    rectangle "<$SQS>\nData Transform DLQ" as data_transform_dlq
+    rectangle "<$SQS>\nData Convert DLQ" as data_convert_dlq
+    rectangle "<$SQS>\nDatabase Ingestion DLQ" as data_ingestion_dlq
+    rectangle "<$SQS>\nJoin" as join_queue
+
+    rectangle "<$S3BUCKET>\nControl Error Log" as error_bucket
+    rectangle "<$S3BUCKET>\nControl Error Log\nReplica" as error_bucket_dr
+
+    'link the Lambdas to the logs
+    rectangle "<$LOGGROUP>\nReg Maintenance Cluster" as registry_maintenance_cluster_log
+    rectangle "<$LOGGROUP>\nReg Maintenance General" as registry_maintenance_general_log
+    rectangle "<$LOGGROUP>\nReg Maintenance" as registry_maintenance_log
+    rectangle "<$LOGGROUP>\nReg Maintenance Error" as registry_maintenance_error_log
+    rectangle "<$LOGGROUP>\nGlue Wrapper" as glue_wrapper_log
+    rectangle "<$LOGGROUP>\nFile Splitter" as file_splitter_log
+    rectangle "<$LOGGROUP>\nJoin" as join_log
+    rectangle "<$LOGGROUP>\nJoin Monitor" as join_monitor_log
+    rectangle "<$LOGGROUP>\nDelay" as delay_log
+    rectangle "<$LOGGROUP>\nPoll" as poll_log
+    rectangle "<$LOGGROUP>\nStored Proc" as stored_proc_log
+    rectangle "<$LOGGROUP>\nEvent Router" as event_router_log
+    rectangle "<$LOGGROUP>\nData Convert" as data_convert_log
+    rectangle "<$LOGGROUP>\nData Transform" as data_transform_log
+    rectangle "<$LOGGROUP>\nDatabase Ingestion" as data_ingestion_log
+    rectangle "<$LOGGROUP>\nData Query" as data_query_log
+    rectangle "<$LOGGROUP>\nControl" as control_log
+    rectangle "<$LOGGROUP>\nError Handler" as error_handler_log
+
+    ut_control_file_splitter_lambda .l.> file_splitter_log
+    ut_control_glue_wrapper_lambda .l.> glue_wrapper_log
+    ut_control_delay_lambda .l.> delay_log
+    ut_control_file_poller_lambda .l.> poll_log
+    ut_control_join_lambda .l.> join_log
+    ut_control_join_monitor_lambda .l.> join_monitor_log
+    ut_control_event_router_lambda .l.> event_router_log
+    data_convert_lambda .l.> data_convert_log
+    data_transform_lambda .l.> data_transform_log
+    data_ingestion_lambda .l.> data_ingestion_log
+    data_query_lambda .l.> data_query_log
+    ut_control_stored_proc_warpper_lambda .l.> stored_proc_log
+
+    control_topic -d-> registry_maintenance
+    control_error -d-> control_error_dlq : "DLQ"
+    error_bucket .d.> error_bucket_dr
+
+    data_convert_lambda --> data_convert_dlq
+    data_transform_lambda --> data_transform_dlq
+    data_ingestion_lambda --> data_ingestion_dlq
+
+    control_topic .l[norank].> ut_control_glue_wrapper_lambda
+    control_topic .l[norank].> ut_control_file_splitter_lambda
+
+    control_topic .l[norank].> ut_control_join_lambda
+    control_topic .l[norank].> ut_control_delay_lambda
+    control_topic .l[norank].> ut_control_file_poller_lambda
+    control_topic .l[norank].> ut_control_stored_proc_warpper_lambda
+    control_topic .l[norank].> ut_control_event_router_lambda
+    control_topic .l[norank].> data_convert_lambda
+    control_topic .l[norank].> data_transform_lambda
+    control_topic .l[norank].> data_ingestion_lambda
+    control_topic .l[norank].> data_query_lambda
+    control_topic .l[norank].> control_lambda
+
+@enduml
+
