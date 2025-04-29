@@ -93,7 +93,7 @@ skinparam rectangle<<ProbePoint>>{
 !$LOOKER="img:"+$BASEURL+"/icons/gcp/looker.png"
 
 'AWS
-!$AWSCLOUD="img:"+$BASEURL+"/icons/aws/AWS-Cloud-logo_32_Dark.png"
+!$AWSCLOUD="img:"+$BASEURL+"/icons/aws/AWS-Cloud-logo_64.png"
 !$LAMBDA="img:"+$BASEURL+"/icons/aws/Arch_Compute/64/Arch_AWS-Lambda_64.png"
 !$S3BUCKET="img:"+$BASEURL+"/icons/aws/Arch_Storage/64/Arch_Amazon-Simple-Storage-Service_64.png"
 !$EMR="img:"+$BASEURL+"/icons/aws/Arch_Analytics/64/Arch_Amazon-EMR_64.png"
