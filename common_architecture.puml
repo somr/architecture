@@ -24,6 +24,7 @@ Common section containing alias and styles
 !$RECORD="img:"+$BASEURL+"/icons/individualRecord.png"
 !$CLOUDERA="img:"+$BASEURL+"/icons/cloudera_logo_icon.png"
 !$RESTAPI="img:"+$BASEURL+"/icons/api-cogwheel.png"
+!$ARGO="img:"+$BASEURL+"/icons/argo.png"
 
 skinparam DefaultTextAlignment center
 skinparam DefaultAlignment center
