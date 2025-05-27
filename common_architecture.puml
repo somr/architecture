@@ -17,7 +17,7 @@ Common section containing alias and styles
 !$JOB="img:"+$BASEURL+"/icons/kubernetes/resources/labeled/job-128.png"
 !$SCH="img:"+$BASEURL+"/icons/kubernetes/control_plane_components/labeled/sched-128.png"
 !$API="img:"+$BASEURL+"/icons/kubernetes/control_plane_components/labeled/api-128.png"
-
+!$VOLUME="img:"+$BASEURL+"/icons/kubernetes/resources/labeled/vol-128.png"
 
 'COMMON
 !$FILE="img:"+$BASEURL+"/icons/file_manyrecords.png"
@@ -90,6 +90,8 @@ skinparam rectangle<<ProbePoint>>{
 !$SCHEDULER="img:"+$BASEURL+"/icons/gcp/scheduler.png"
 !$MONITORING="img:"+$BASEURL+"/icons/gcp/monitoring.png"
 !$LOOKER="img:"+$BASEURL+"/icons/gcp/looker.png"
+!$PERSISTENTDISK="img:"+$BASEURL+"/icons/gcp/persistent_disk.png"
+
 
 'AWS
 !$AWSCLOUD="img:"+$BASEURL+"/icons/aws/AWS-Cloud-logo_64.png"
