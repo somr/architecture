@@ -102,7 +102,7 @@ skinparam rectangle<<ProbePoint>>{
 
 
 !$EMRJOB="img:"+$BASEURL+"/icons/aws/Arch_Analytics/64/Res_Amazon-EMR_Cluster_48.png"
-
+!$FIREHOSE="img:"+$BASEURL+"/icons/aws/Arch_Analytics/64/Arch_Amazon-Kinesis-Data-Firehose_64.png"
 !$ATHENA="img:"+$BASEURL+"/icons/aws/Arch_Analytics/64/Arch_Amazon-Athena_64.png"
 
 !$SNS="img:"+$BASEURL+"/icons/aws/Arch_App-Integration/64/Arch_Amazon-Simple-Notification-Service_64.png"
@@ -124,5 +124,6 @@ skinparam rectangle<<ProbePoint>>{
 !$RDS_MY="img:"+$BASEURL+"/icons/aws/Arch_Database/64/Res_Amazon-Aurora-PostgreSQL-Instance_48.png"
 
 !$SSM="img:"+$BASEURL+"/icons/aws/Arch_Security-Identity-Compliance/64/Arch_AWS-Secrets-Manager_64.png"
+
 
 @enduml
